@@ -19,10 +19,7 @@ let moreEmployees = true;
 // and to create objects for each team member (using the correct classes as blueprints!)
 
 // create questions to ask user
-while(moreEmployees){
-    
-    let employeeInformation = [];
-
+// implement some sort of loop later    
     inquirer.prompt([{
         type: 'list',
         message: 'What is the role of this employee?',
@@ -35,7 +32,7 @@ while(moreEmployees){
         name: 'employeeName',
     },
     {
-        type: 'input',
+        type: 'number',
         message: 'What is the ID number for this employee?',
         name: 'employeeID',
     },
@@ -49,15 +46,22 @@ while(moreEmployees){
         switch(data.employeeRole) {
             case 'Manager':
                 inquirer.prompt([{
-                    type: 'input',
+                    type: 'number',
                     message: "What is this manager's office number?",
                     name: 'officeNumber'
+                },
+                {
+                    type: 'confirm',
+                    message: 'Are there more employees to add?',
+                    name: 'continue',
+
                 }]).then((data) => {
-                    Manager employeeInformation[0] = new Manager(employeeInformation[0], employeeInformation[1], employeeInformation[2], data.officeNumber);
-                }
+                    moreEmployees = data.continue;
+                    Manager  = new Manager(employeeInformation[0], employeeInformation[1], employeeInformation[2], data.officeNumber);
+                
+                });
         }
     });
-}
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
