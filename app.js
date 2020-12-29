@@ -57,8 +57,7 @@ let moreEmployees = true;
 
                 }]).then((data) => {
                     moreEmployees = data.continue;
-                    Manager  = new Manager(employeeInformation[0], employeeInformation[1], employeeInformation[2], data.officeNumber);
-                
+                    employeeCollection.push(new Manager(employeeInformation[0], employeeInformation[1], employeeInformation[2], data.officeNumber));
                 });
         }
     });
