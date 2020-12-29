@@ -14,12 +14,90 @@ const employeeCollection = [];
 
 let employeeInformation = [];
 
-let moreEmployees = true;
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
 // create questions to ask user
 // implement some sort of loop later    
+const generateEmployee = check => {
+    if (check) {
+        inquirer.prompt([{
+            type: 'list',
+            message: 'What is the role of this employee?',
+            name: 'employeeRole',
+            choices: ['Manager', 'Engineer', 'Intern'],
+        },
+        {
+            type: 'input',
+            message: 'What is the name of this employee?',
+            name: 'employeeName',
+        },
+        {
+            type: 'number',
+            message: 'What is the ID number for this employee?',
+            name: 'employeeID',
+        },
+        {
+            type: 'input',
+            message: 'What is the email address of this employee?',
+            name:'employeeEmail'
+        }]).then((data) => {
+            employeeInformation = [];
+            employeeInformation.push(data.employeeName, data.employeeID, data.employeeEmail);
+    
+            switch(data.employeeRole) {
+                case 'Manager':
+                    inquirer.prompt([{
+                        type: 'number',
+                        message: "What is this manager's office number?",
+                        name: 'officeNumber'
+                    },
+                    {
+                        type: 'confirm',
+                        message: 'Are there more employees to add?',
+                        name: 'continue',
+    
+                    }]).then((data) => {
+                        employeeCollection.push(new Manager(employeeInformation[0], employeeInformation[1], employeeInformation[2], data.officeNumber));
+                        generateEmployee(data.continue);
+                    });
+                case 'Engineer':
+                    inquirer.prompt([{
+                        type: 'input',
+                        message: "What is this engineer's GitHub?",
+                        name: 'github',
+                    },
+                    {
+                        type: 'confirm',
+                        message: 'Are there more employees to add?',
+                        name: 'continue',
+                    }]).then((data) => {
+                        employeeCollection.push(new Engineer(employeeInformation[0], employeeInformation[1], employeeInformation[2], data.github));
+                        generateEmployee(data.continue);
+                    });
+                case 'Intern':
+                    inquirer.prompt([{
+                        type: 'input',
+                        message: "What school does this intern go to?",
+                        name: 'school',
+                    },
+                    {
+                        type: 'confirm',
+                        message: 'Are there more employees to add?',
+                        name: 'continue',
+                    }]).then((data) => {
+                        employeeCollection.push(new Intern(employeeInformation[0], employeeInformation[1], employeeInformation[2], data.school));
+                        generateEmployee(data.continue);
+                    });
+            }
+        });
+    }
+}
+
+generateEmployee(true);
+
+
+/*
     inquirer.prompt([{
         type: 'list',
         message: 'What is the role of this employee?',
@@ -60,7 +138,7 @@ let moreEmployees = true;
                     employeeCollection.push(new Manager(employeeInformation[0], employeeInformation[1], employeeInformation[2], data.officeNumber));
                 });
         }
-    });
+    }); */
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
