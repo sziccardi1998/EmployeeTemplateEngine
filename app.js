@@ -44,54 +44,70 @@ const generateEmployee = check => {
         }]).then((data) => {
             employeeInformation = [];
             employeeInformation.push(data.employeeName, data.employeeID, data.employeeEmail);
+
     
             switch(data.employeeRole) {
                 case 'Manager':
-                    inquirer.prompt([{
-                        type: 'number',
-                        message: "What is this manager's office number?",
-                        name: 'officeNumber'
-                    },
-                    {
-                        type: 'confirm',
-                        message: 'Are there more employees to add?',
-                        name: 'continue',
-    
-                    }]).then((data) => {
-                        employeeCollection.push(new Manager(employeeInformation[0], employeeInformation[1], employeeInformation[2], data.officeNumber));
-                        generateEmployee(data.continue);
-                    });
+                    generateManager(employeeInformation);
+                    break;
                 case 'Engineer':
-                    inquirer.prompt([{
-                        type: 'input',
-                        message: "What is this engineer's GitHub?",
-                        name: 'github',
-                    },
-                    {
-                        type: 'confirm',
-                        message: 'Are there more employees to add?',
-                        name: 'continue',
-                    }]).then((data) => {
-                        employeeCollection.push(new Engineer(employeeInformation[0], employeeInformation[1], employeeInformation[2], data.github));
-                        generateEmployee(data.continue);
-                    });
+                    generateEngineer(employeeInformation);
+                    break;
                 case 'Intern':
-                    inquirer.prompt([{
-                        type: 'input',
-                        message: "What school does this intern go to?",
-                        name: 'school',
-                    },
-                    {
-                        type: 'confirm',
-                        message: 'Are there more employees to add?',
-                        name: 'continue',
-                    }]).then((data) => {
-                        employeeCollection.push(new Intern(employeeInformation[0], employeeInformation[1], employeeInformation[2], data.school));
-                        generateEmployee(data.continue);
-                    });
+                    generateIntern(employeeInformation);
+                    break;
             }
         });
     }
+}
+
+const generateManager = values => {
+    inquirer.prompt([{
+        type: 'number',
+        message: "What is this manager's office number?",
+        name: 'officeNumber'
+    },
+    {
+        type: 'confirm',
+        message: 'Are there more employees to add?',
+        name: 'continue',
+
+    }]).then((data) => {
+        employeeCollection.push(new Manager(values[0], values[1], values[2], data.officeNumber));
+        generateEmployee(data.continue);
+    });
+}
+
+const generateEngineer = values => {
+    inquirer.prompt([{
+        type: 'input',
+        message: "What is this engineer's GitHub?",
+        name: 'github',
+    },
+    {
+        type: 'confirm',
+        message: 'Are there more employees to add?',
+        name: 'continue',
+    }]).then((data) => {
+        employeeCollection.push(new Engineer(values[0], values[1], values[2], data.github));
+        generateEmployee(data.continue);
+    });
+}
+
+const generateIntern = values => {
+    inquirer.prompt([{
+        type: 'input',
+        message: "What school does this intern go to?",
+        name: 'school',
+    },
+    {
+        type: 'confirm',
+        message: 'Are there more employees to add?',
+        name: 'continue',
+    }]).then((data) => {
+        employeeCollection.push(new Intern(values[0], values[1], values[2], data.school));
+        generateEmployee(data.continue);
+    });
 }
 
 generateEmployee(true);
@@ -100,7 +116,7 @@ generateEmployee(true);
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
 
-render(employeeCollection);
+cosnt renderHTML = render(employeeCollection);
 
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
