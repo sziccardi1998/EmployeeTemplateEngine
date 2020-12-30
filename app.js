@@ -96,53 +96,11 @@ const generateEmployee = check => {
 
 generateEmployee(true);
 
-
-/*
-    inquirer.prompt([{
-        type: 'list',
-        message: 'What is the role of this employee?',
-        name: 'employeeRole',
-        choices: ['Manager', 'Engineer', 'Intern'],
-    },
-    {
-        type: 'input',
-        message: 'What is the name of this employee?',
-        name: 'employeeName',
-    },
-    {
-        type: 'number',
-        message: 'What is the ID number for this employee?',
-        name: 'employeeID',
-    },
-    {
-        type: 'input',
-        message: 'What is the email address of this employee?',
-        name:'employeeEmail'
-    }]).then((data) => {
-        employeeInformation.push(data.employeeName, data.employeeID, data.employeeEmail);
-
-        switch(data.employeeRole) {
-            case 'Manager':
-                inquirer.prompt([{
-                    type: 'number',
-                    message: "What is this manager's office number?",
-                    name: 'officeNumber'
-                },
-                {
-                    type: 'confirm',
-                    message: 'Are there more employees to add?',
-                    name: 'continue',
-
-                }]).then((data) => {
-                    moreEmployees = data.continue;
-                    employeeCollection.push(new Manager(employeeInformation[0], employeeInformation[1], employeeInformation[2], data.officeNumber));
-                });
-        }
-    }); */
-
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
+
+render(employeeCollection);
 
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
