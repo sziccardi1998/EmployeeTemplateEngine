@@ -144,8 +144,6 @@ const createHTML = values => {
 
     const returnedHTML = render(values);
 
-    console.log(returnedHTML);
-
     try {
         if (!fs.existsSync(OUTPUT_DIR)) {
             fs.mkdirSync(OUTPUT_DIR);
